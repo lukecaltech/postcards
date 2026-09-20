@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pompton Lakes Postcard Archive</title>
+    <link rel="stylesheet" href="styles.css">
+    
+    <!-- Leaflet Map -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="muni.js"></script>
+
+    <script src="script.js" defer></script>
+    
+<script>
+function filterSelection(c) {
+    var x = document.getElementsByClassName("gallery-item");
+    for (var i = 0; i < x.length; i++) {
+        x[i].style.display = "none";
+        var tagsAttr = x[i].getAttribute("data-tags");
+        if (c === "all" || (tagsAttr && tagsAttr.includes(c))) {
+            x[i].style.display = "block";
+        }
+    }
+    var btns = document.getElementsByClassName("filter-btn");
+    for (var i = 0; i < btns.length; i++) {
+        btns[i].classList.remove("active");
+        if (btns[i].dataset.filter === c) {
+            btns[i].classList.add("active");
+        }
+    }
+}
+document.addEventListener("DOMContentLoaded", () => { filterSelection('all'); });
+</script>
+
+</head>
+<body>
+    <header>
+        <h1>Pompton Lakes Postcard Archive</h1>
+    </header>
+<div class="filters">
+    <button class="filter-btn active" data-filter="all" onclick="filterSelection('all')">All</button>
+    <button class="filter-btn" data-filter="dam" onclick="filterSelection('dam')">Pompton Lake Dam</button>
+    <button class="filter-btn" data-filter="inez" onclick="filterSelection('inez')">Lake Inez</button>
+    <button class="filter-btn" data-filter="riverdale" onclick="filterSelection('riverdale')">Riverdale / Pompton Junction</button>
+    <button class="filter-btn" data-filter="misc" onclick="filterSelection('misc')">Scenes on Pompton Lake</button>
+    <button class="filter-btn" data-filter="morriscanalpomptonfeeder" onclick="filterSelection('morriscanalpomptonfeeder')">Morris Canal (Pompton Feeder)</button>
+</div>
+<main class="gallery-grid">
+
+        <a href="postcard001.html" class="gallery-item" data-tags='["dam"]'>
+            <img src="thumbnails/thumb_001.jpg" alt="Postcard 001" loading="lazy">
+            <h3>Postcard 001</h3>
+            <div class="tags"><span class="tag tag-cat">Pompton Lake Dam</span></div>
+        </a>
+        
+        <a href="postcard002.html" class="gallery-item" data-tags='["inez"]'>
+            <img src="thumbnails/thumb_002.jpg" alt="Postcard 002" loading="lazy">
+            <h3>Postcard 002</h3>
+            <div class="tags"><span class="tag tag-cat">Lake Inez</span></div>
+        </a>
+        
+        <a href="postcard003.html" class="gallery-item" data-tags='["riverdale"]'>
+            <img src="thumbnails/thumb_003.jpg" alt="Postcard 003" loading="lazy">
+            <h3>Postcard 003</h3>
+            <div class="tags"><span class="tag tag-cat">Riverdale / Pompton Junction</span></div>
+        </a>
+        
+        <a href="postcard004.html" class="gallery-item" data-tags='["riverdale"]'>
+            <img src="thumbnails/thumb_004.jpg" alt="Postcard 004" loading="lazy">
+            <h3>Postcard 004</h3>
+            <div class="tags"><span class="tag tag-cat">Riverdale / Pompton Junction</span></div>
+        </a>
+        
+        <a href="postcard005.html" class="gallery-item" data-tags='["riverdale"]'>
+            <img src="thumbnails/thumb_005.jpg" alt="Postcard 005" loading="lazy">
+            <h3>Postcard 005</h3>
+            <div class="tags"><span class="tag tag-cat">Riverdale / Pompton Junction</span></div>
+        </a>
+        
+        <a href="postcard006.html" class="gallery-item" data-tags='["misc"]'>
+            <img src="thumbnails/thumb_006.jpg" alt="Postcard 006" loading="lazy">
+            <h3>Postcard 006</h3>
+            <div class="tags"><span class="tag tag-cat">Scenes on Pompton Lake</span></div>
+        </a>
+        
+        <a href="postcard007.html" class="gallery-item" data-tags='["misc"]'>
+            <img src="thumbnails/thumb_007.jpg" alt="Postcard 007" loading="lazy">
+            <h3>Postcard 007</h3>
+            <div class="tags"><span class="tag tag-cat">Scenes on Pompton Lake</span></div>
+        </a>
+        
+        <a href="postcard008.html" class="gallery-item" data-tags='["dam"]'>
+            <img src="thumbnails/thumb_008.jpg" alt="Postcard 008" loading="lazy">
+            <h3>Postcard 008</h3>
+            <div class="tags"><span class="tag tag-cat">Pompton Lake Dam</span></div>
+        </a>
+        
+        <a href="postcard009.html" class="gallery-item" data-tags='["inez"]'>
+            <img src="thumbnails/thumb_009.jpg" alt="Postcard 009" loading="lazy">
+            <h3>Postcard 009</h3>
+            <div class="tags"><span class="tag tag-cat">Lake Inez</span></div>
+        </a>
+        
+        <a href="postcard010.html" class="gallery-item" data-tags='["inez"]'>
+            <img src="thumbnails/thumb_010.jpg" alt="Postcard 010" loading="lazy">
+            <h3>Postcard 010</h3>
+            <div class="tags"><span class="tag tag-cat">Lake Inez</span></div>
+        </a>
+        
+        <a href="postcard011.html" class="gallery-item" data-tags='[]'>
+            <img src="thumbnails/thumb_011.jpg" alt="Postcard 011" loading="lazy">
+            <h3>Postcard 011</h3>
+            <div class="tags"></div>
+        </a>
+        
+        <a href="postcard012.html" class="gallery-item" data-tags='[]'>
+            <img src="thumbnails/thumb_012.jpg" alt="Postcard 012" loading="lazy">
+            <h3>Postcard 012</h3>
+            <div class="tags"></div>
+        </a>
+        
+        <a href="postcard013.html" class="gallery-item" data-tags='["dam"]'>
+            <img src="thumbnails/thumb_013.jpg" alt="Postcard 013" loading="lazy">
+            <h3>Postcard 013</h3>
+            <div class="tags"><span class="tag tag-cat">Pompton Lake Dam</span></div>
+        </a>
+        
+        <a href="postcard014.html" class="gallery-item" data-tags='["dam"]'>
+            <img src="thumbnails/thumb_014.jpg" alt="Postcard 014" loading="lazy">
+            <h3>Postcard 014</h3>
+            <div class="tags"><span class="tag tag-cat">Pompton Lake Dam</span></div>
+        </a>
+        
+        <a href="postcard015.html" class="gallery-item" data-tags='[]'>
+            <img src="thumbnails/thumb_015.jpg" alt="Postcard 015" loading="lazy">
+            <h3>Postcard 015</h3>
+            <div class="tags"></div>
+        </a>
+        
+        <a href="postcard016.html" class="gallery-item" data-tags='["dam"]'>
+            <img src="thumbnails/thumb_016.jpg" alt="Postcard 016" loading="lazy">
+            <h3>Postcard 016</h3>
+            <div class="tags"><span class="tag tag-cat">Pompton Lake Dam</span></div>
+        </a>
+        
+        <a href="postcard017.html" class="gallery-item" data-tags='["misc", "inez"]'>
+            <img src="thumbnails/thumb_017.jpg" alt="Postcard 017" loading="lazy">
+            <h3>Postcard 017</h3>
+            <div class="tags"><span class="tag tag-cat">Scenes on Pompton Lake</span><span class="tag tag-cat">Lake Inez</span></div>
+        </a>
+        
+        <a href="postcard018.html" class="gallery-item" data-tags='["misc"]'>
+            <img src="thumbnails/thumb_018.jpg" alt="Postcard 018" loading="lazy">
+            <h3>Postcard 018</h3>
+            <div class="tags"><span class="tag tag-cat">Scenes on Pompton Lake</span></div>
+        </a>
+        
+        <a href="postcard019.html" class="gallery-item" data-tags='[]'>
+            <img src="thumbnails/thumb_019.jpg" alt="Postcard 019" loading="lazy">
+            <h3>Postcard 019</h3>
+            <div class="tags"></div>
+        </a>
+        
+        <a href="postcard020.html" class="gallery-item" data-tags='["riverdale"]'>
+            <img src="thumbnails/thumb_020.jpg" alt="Postcard 020" loading="lazy">
+            <h3>Postcard 020</h3>
+            <div class="tags"><span class="tag tag-cat">Riverdale / Pompton Junction</span></div>
+        </a>
+        
+        <a href="postcard021.html" class="gallery-item" data-tags='[]'>
+            <img src="thumbnails/thumb_021.jpg" alt="Postcard 021" loading="lazy">
+            <h3>Postcard 021</h3>
+            <div class="tags"></div>
+        </a>
+        
+        <a href="postcard022.html" class="gallery-item" data-tags='[]'>
+            <img src="thumbnails/thumb_022.jpg" alt="Postcard 022" loading="lazy">
+            <h3>Postcard 022</h3>
+            <div class="tags"></div>
+        </a>
+        
+        <a href="postcard023.html" class="gallery-item" data-tags='["riverdale", "morriscanalpomptonfeeder"]'>
+            <img src="thumbnails/thumb_023.jpg" alt="Postcard 023" loading="lazy">
+            <h3>Postcard 023</h3>
+            <div class="tags"><span class="tag tag-cat">Riverdale / Pompton Junction</span><span class="tag tag-cat">Morris Canal (Pompton Feeder)</span></div>
+        </a>
+        
+        <a href="postcard024.html" class="gallery-item" data-tags='["riverdale"]'>
+            <img src="thumbnails/thumb_024.jpg" alt="Postcard 024" loading="lazy">
+            <h3>Postcard 024</h3>
+            <div class="tags"><span class="tag tag-cat">Riverdale / Pompton Junction</span></div>
+        </a>
+        
+        <a href="postcard025.html" class="gallery-item" data-tags='["inez"]'>
+            <img src="thumbnails/thumb_025.jpg" alt="Postcard 025" loading="lazy">
+            <h3>Postcard 025</h3>
+            <div class="tags"><span class="tag tag-cat">Lake Inez</span></div>
+        </a>
+        
+        <a href="postcard026.html" class="gallery-item" data-tags='["riverdale"]'>
+            <img src="thumbnails/thumb_026.jpg" alt="Postcard 026" loading="lazy">
+            <h3>Postcard 026</h3>
+            <div class="tags"><span class="tag tag-cat">Riverdale / Pompton Junction</span></div>
+        </a>
+        
+        <a href="postcard027.html" class="gallery-item" data-tags='["riverdale"]'>
+            <img src="thumbnails/thumb_027.jpg" alt="Postcard 027" loading="lazy">
+            <h3>Postcard 027</h3>
+            <div class="tags"><span class="tag tag-cat">Riverdale / Pompton Junction</span></div>
+        </a>
+        
+        <a href="postcard028.html" class="gallery-item" data-tags='["dam"]'>
+            <img src="thumbnails/thumb_028.jpg" alt="Postcard 028" loading="lazy">
+            <h3>Postcard 028</h3>
+            <div class="tags"><span class="tag tag-cat">Pompton Lake Dam</span></div>
+        </a>
+        
+        <a href="postcard029.html" class="gallery-item" data-tags='[]'>
+            <img src="thumbnails/thumb_029.jpg" alt="Postcard 029" loading="lazy">
+            <h3>Postcard 029</h3>
+            <div class="tags"></div>
+        </a>
+        
+        <a href="postcard030.html" class="gallery-item" data-tags='["misc"]'>
+            <img src="thumbnails/thumb_030.jpg" alt="Postcard 030" loading="lazy">
+            <h3>Postcard 030</h3>
+            <div class="tags"><span class="tag tag-cat">Scenes on Pompton Lake</span></div>
+        </a>
+        
+        <a href="postcard031.html" class="gallery-item" data-tags='[]'>
+            <img src="thumbnails/thumb_031.jpg" alt="Postcard 031" loading="lazy">
+            <h3>Postcard 031</h3>
+            <div class="tags"></div>
+        </a>
+        
+        <a href="postcard032.html" class="gallery-item" data-tags='[]'>
+            <img src="thumbnails/thumb_032.jpg" alt="Postcard 032" loading="lazy">
+            <h3>Postcard 032</h3>
+            <div class="tags"></div>
+        </a>
+        </main>
+
+        <div class="index-map-container" style="max-width: 1200px; margin: 40px auto; padding: 0 20px;">
+            <h2>Mapped Postcards</h2>
+            <p style="color:#666; margin-bottom:15px;">Select a point on the map below to view the approximate location and viewshed of specific postcards.</p>
+            <div id="index-map" style="width: 100%; height: 500px; border-radius: 8px; border: 1px solid #ccc; box-shadow: 0 4px 12px rgba(0,0,0,0.05);"></div>
+            <script>
+            document.addEventListener("DOMContentLoaded", () => {
+                const features = [{"lat": 40.99288048954979, "lng": -74.27625238895418, "name": "Postcard 001", "angle": 262, "fov": 50, "radius": 350, "color": "#ff3b30", "url": "postcard001.html", "thumb": "thumbnails/thumb_001.jpg"}, {"lat": 41.01706486733496, "lng": -74.28843498229982, "name": "Postcard 002", "angle": 239, "fov": 120, "radius": 100, "color": "#ff3b30", "url": "postcard002.html", "thumb": "thumbnails/thumb_002.jpg"}, {"lat": 40.99881607826166, "lng": -74.29987192153932, "name": "Postcard 003", "angle": 214, "fov": 76, "radius": 100, "color": "#ff3b30", "url": "postcard003.html", "thumb": "thumbnails/thumb_003.jpg"}, {"lat": 40.99726137817312, "lng": -74.30674374103548, "name": "Postcard 005", "angle": 42, "fov": 83, "radius": 930, "color": "#ff3b30", "url": "postcard005.html", "thumb": "thumbnails/thumb_005.jpg"}, {"lat": 41.005864401718334, "lng": -74.27862346172334, "name": "Postcard 006", "angle": 169, "fov": 48, "radius": 740, "color": "#ff3b30", "url": "postcard006.html", "thumb": "thumbnails/thumb_006.jpg"}, {"lat": 40.991795344609656, "lng": -74.27856445312501, "name": "Postcard 008", "angle": 14, "fov": 76, "radius": 100, "color": "#ff3b30", "url": "postcard008.html", "thumb": "thumbnails/thumb_008.jpg"}, {"lat": 41.0072569738029, "lng": -74.2920881509781, "name": "Postcard 009", "angle": 8, "fov": 120, "radius": 100, "color": "#ff3b30", "url": "postcard009.html", "thumb": "thumbnails/thumb_009.jpg"}, {"lat": 41.0129807836762, "lng": -74.29002285003664, "name": "Postcard 010", "angle": 355, "fov": 120, "radius": 100, "color": "#ff3b30", "url": "postcard010.html", "thumb": "thumbnails/thumb_010.jpg"}, {"lat": 41.00481590506042, "lng": -74.28929328918458, "name": "Postcard 011", "angle": 334, "fov": 51, "radius": 70, "color": "#ff3b30", "url": "postcard011.html", "thumb": "thumbnails/thumb_011.jpg"}, {"lat": 40.992228594918, "lng": -74.28024351596834, "name": "Postcard 013", "angle": 82, "fov": 75, "radius": 150, "color": "#ff3b30", "url": "postcard013.html", "thumb": "thumbnails/thumb_013.jpg"}, {"lat": 40.99192086601995, "lng": -74.27998065948488, "name": "Postcard 014", "angle": 64, "fov": 71, "radius": 150, "color": "#ff3b30", "url": "postcard014.html", "thumb": "thumbnails/thumb_014.jpg"}, {"lat": 40.995180289933835, "lng": -74.28086042404176, "name": "Postcard 015", "angle": 241, "fov": 47, "radius": 610, "color": "#ff3b30", "url": "postcard015.html", "thumb": "thumbnails/thumb_015.jpg"}, {"lat": 40.99175485378116, "lng": -74.27916526794435, "name": "Postcard 016", "angle": 35, "fov": 92, "radius": 100, "color": "#ff3b30", "url": "postcard016.html", "thumb": "thumbnails/thumb_016.jpg"}, {"lat": 41.007289358850066, "lng": -74.29231345653535, "name": "Postcard 017 (Part 1)", "angle": 13, "fov": 78, "radius": 250, "color": "#007bff", "url": "postcard017.html", "thumb": "thumbnails/thumb_017.jpg"}, {"lat": 41.007690122491475, "lng": -74.27519559860231, "name": "Postcard 017 (Part 2)", "angle": 30, "fov": 90, "radius": 300, "color": "#28a745", "url": "postcard017.html", "thumb": "thumbnails/thumb_017.jpg"}, {"lat": 41.00134238769616, "lng": -74.27603244781496, "name": "Postcard 017 (Part 3)", "angle": 346, "fov": 80, "radius": 660, "color": "#fd7e14", "url": "postcard017.html", "thumb": "thumbnails/thumb_017.jpg"}, {"lat": 40.9996096089635, "lng": -74.290269613266, "name": "Postcard 019", "angle": 55, "fov": 66, "radius": 100, "color": "#ff3b30", "url": "postcard019.html", "thumb": "thumbnails/thumb_019.jpg"}, {"lat": 41.00373500494221, "lng": -74.2995071411133, "name": "Postcard 020", "angle": 244, "fov": 75, "radius": 120, "color": "#ff3b30", "url": "postcard020.html", "thumb": "thumbnails/thumb_020.jpg"}, {"lat": 40.99364979790394, "lng": -74.27502393722536, "name": "Postcard 021", "angle": 48, "fov": 80, "radius": 320, "color": "#ff3b30", "url": "postcard021.html", "thumb": "thumbnails/thumb_021.jpg"}, {"lat": 40.99364979790394, "lng": -74.27502393722536, "name": "Postcard 022", "angle": 34, "fov": 80, "radius": 340, "color": "#ff3b30", "url": "postcard022.html", "thumb": "thumbnails/thumb_022.jpg"}, {"lat": 40.99881607826166, "lng": -74.29987192153932, "name": "Postcard 023 (Part 1)", "angle": 214, "fov": 75, "radius": 100, "color": "#007bff", "url": "postcard023.html", "thumb": "thumbnails/thumb_023.jpg"}, {"lat": 40.97159138183371, "lng": -74.27992701530458, "name": "Postcard 023 (Part 2)", "angle": 110, "fov": 72, "radius": 100, "color": "#28a745", "url": "postcard023.html", "thumb": "thumbnails/thumb_023.jpg"}, {"lat": 40.99922094205833, "lng": -74.30324077606203, "name": "Postcard 024 (Part 1)", "angle": 331, "fov": 120, "radius": 280, "color": "#007bff", "url": "postcard024.html", "thumb": "thumbnails/thumb_024.jpg"}, {"lat": 40.996888892498504, "lng": -74.29815530776979, "name": "Postcard 024 (Part 2)", "angle": 0, "fov": 70, "radius": 220, "color": "#28a745", "url": "postcard024.html", "thumb": "thumbnails/thumb_024.jpg"}, {"lat": 40.99888085663624, "lng": -74.29856300354005, "name": "Postcard 024 (Part 3)", "angle": 89, "fov": 90, "radius": 100, "color": "#fd7e14", "url": "postcard024.html", "thumb": "thumbnails/thumb_024.jpg"}, {"lat": 41.0072569738029, "lng": -74.2920881509781, "name": "Postcard 025", "angle": 8, "fov": 120, "radius": 100, "color": "#ff3b30", "url": "postcard025.html", "thumb": "thumbnails/thumb_025.jpg"}, {"lat": 40.99181559001457, "lng": -74.2807048559189, "name": "Postcard 028", "angle": 49, "fov": 80, "radius": 100, "color": "#ff3b30", "url": "postcard028.html", "thumb": "thumbnails/thumb_028.jpg"}];
+                if (features.length === 0) return;
+                
+                const map = L.map('index-map').setView([40.99893546743323, -74.28726156552634], 14);
+                
+                const esriStreet = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer/tile/{z}/{y}/{x}', { attribution: 'Tiles © Esri' });
+                const esriSat = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', { attribution: 'Tiles © Esri' });
+                const esriSatLabels = L.layerGroup([
+                    L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', { attribution: 'Tiles © Esri' }),
+                    L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/Reference/World_Boundaries_and_Places/MapServer/tile/{z}/{y}/{x}')
+                ]);
+                
+                esriStreet.addTo(map);
+                L.control.layers({
+                    "Street Map": esriStreet,
+                    "Satellite": esriSat,
+                    "Satellite (with Labels)": esriSatLabels
+                }).addTo(map);
+                
+                if (typeof muniGeoJSON !== 'undefined') {
+                    L.geoJSON(muniGeoJSON, {
+                        style: function (feature) {
+                            return {color: "#555", weight: 2, fillOpacity: 0.1};
+                        }
+                    }).addTo(map);
+                }
+                
+                const bounds = L.latLngBounds();
+                const viewshedLayer = L.featureGroup().addTo(map);
+                
+                // Group features by exact coordinates
+                const grouped = {};
+                features.forEach(f => {
+                    const key = f.lat + ',' + f.lng;
+                    if (!grouped[key]) grouped[key] = { lat: f.lat, lng: f.lng, items: [] };
+                    grouped[key].items.push(f);
+                });
+                
+                Object.values(grouped).forEach(g => {
+                    bounds.extend([g.lat, g.lng]);
+                    const marker = L.marker([g.lat, g.lng]).addTo(map);
+                    
+                    let popupContent = '<div style="text-align:center; max-height:250px; overflow-y:auto; padding-right:10px;">';
+                    g.items.forEach(f => {
+                        popupContent += `
+                            <div style="margin-bottom: 15px; border-bottom: 1px solid #eee; padding-bottom: 10px;">
+                                <strong>${f.name}</strong><br>
+                                <a href="${f.url}"><img src="${f.thumb}" style="width:120px; margin-top:8px; border-radius:4px; box-shadow: 0 2px 5px rgba(0,0,0,0.2);"></a><br>
+                                <a href="${f.url}" style="display:inline-block; margin-top:8px; font-weight:bold; color:#007bff; text-decoration:none;">View Details</a>
+                            </div>
+                        `;
+                    });
+                    popupContent += '</div>';
+                    marker.bindPopup(popupContent);
+                    
+                    marker.on('click', () => {
+                        viewshedLayer.clearLayers();
+                        g.items.forEach(f => {
+                            const points = [[f.lat, f.lng]];
+                            const R = 6378137;
+                            const start = f.angle - (f.fov / 2);
+                            const end = f.angle + (f.fov / 2);
+                            for (let i = start; i <= end; i += 5) {
+                                const rad = i * Math.PI / 180;
+                                const dLat = (f.radius * Math.cos(rad)) / R;
+                                const dLng = (f.radius * Math.sin(rad)) / (R * Math.cos(f.lat * Math.PI / 180));
+                                points.push([
+                                    f.lat + dLat * (180 / Math.PI),
+                                    f.lng + dLng * (180 / Math.PI)
+                                ]);
+                            }
+                            L.polygon(points, {color: f.color || '#ff3b30', fillOpacity: 0.25, weight: 2}).addTo(viewshedLayer);
+                        });
+                    });
+                });
+                
+                if (features.length > 1) {
+                    map.fitBounds(bounds, {padding: [50, 50]});
+                }
+            });
+            </script>
+        </div>
+        
+</body>
+</html>

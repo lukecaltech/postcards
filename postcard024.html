@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Postcard 024 - Pompton Lakes Archive</title>
+    <link rel="stylesheet" href="styles.css">
+    
+    <!-- Leaflet Map -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="muni.js"></script>
+
+    <script src="script.js" defer></script>
+    
+</head>
+<body>
+    <header>
+        <h1>Pompton Lakes Postcard Archive</h1>
+    </header>
+
+    <main class="postcard-detail">
+        <a href="index.html" class="back-link">← Back to Gallery</a>
+        <h2>Postcard 024</h2>
+        <div class="tags" style="margin-bottom: 20px;"><span class="tag tag-cat" data-box="2">Riverdale / Pompton Junction</span></div>
+        
+        <div class="postcard-images">
+            <div class="postcard-view">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+                    <h3 style="margin: 0;">Front</h3>
+                    <button onclick="document.getElementById('front-wrapper-024').classList.toggle('hide-boxes')" style="cursor: pointer; padding: 5px 10px; background: #6c757d; color: white; border: none; border-radius: 4px; font-size: 14px;">Show Tagged Views</button>
+                </div>
+                <div class="image-wrapper" id="front-wrapper-024">
+                    <img src="images/postcard024.jpg" alt="Postcard 024 Front">
+                    
+            <div class="bounding-box box-0" style="left:49.166666666666664%; top:4.081632653061225%; width:43.0%; height:40.05102040816326%; border-color:#007bff;">
+                <span class="box-label" style="background:#007bff; color:white; padding:2px 6px; font-size:12px; font-weight:bold; position:absolute; top:0; left:0;">Part 1</span>
+            </div>
+            
+            <div class="bounding-box box-1" style="left:4.333333333333334%; top:5.612244897959184%; width:41.833333333333336%; height:40.05102040816326%; border-color:#28a745;">
+                <span class="box-label" style="background:#28a745; color:white; padding:2px 6px; font-size:12px; font-weight:bold; position:absolute; top:0; left:0;">Part 2</span>
+            </div>
+            
+            <div class="bounding-box box-2" style="left:4.333333333333334%; top:47.704081632653065%; width:42.333333333333336%; height:40.30612244897959%; border-color:#fd7e14;">
+                <span class="box-label" style="background:#fd7e14; color:white; padding:2px 6px; font-size:12px; font-weight:bold; position:absolute; top:0; left:0;">Part 3</span>
+            </div>
+            
+                </div>
+            </div>
+            
+            <div class="postcard-view">
+                <h3>Back</h3>
+                <img src="images/back024.jpg" alt="Postcard 024 Back">
+            </div>
+        </div>
+        
+        
+            <div class="postcard-view map-view" style="margin-top: 40px; margin-bottom: 40px;">
+                <h3>Approximate Location + Viewshed</h3>
+                <div id="map" style="width: 100%; height: 400px; border-radius: 8px; border: 1px solid #ccc; box-shadow: 0 4px 12px rgba(0,0,0,0.05);"></div>
+                <script>
+                document.addEventListener("DOMContentLoaded", () => {
+                    const features = [{"lat": 40.99922094205833, "lng": -74.30324077606203, "name": "Location 24a (Part 1)", "angle": 331, "fov": 120, "radius": 280, "color": "#007bff"}, {"lat": 40.996888892498504, "lng": -74.29815530776979, "name": "Location 24b (Part 2)", "angle": 0, "fov": 70, "radius": 220, "color": "#28a745"}, {"lat": 40.99888085663624, "lng": -74.29856300354005, "name": "Location 24c (Part 3)", "angle": 89, "fov": 90, "radius": 100, "color": "#fd7e14"}];
+                    if (features.length === 0) return;
+                    
+                    const map = L.map('map').setView([40.99833023039769, -74.29998636245729], 15);
+                    
+                    const esriStreet = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer/tile/{z}/{y}/{x}', { attribution: 'Tiles © Esri' });
+                    const esriSat = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', { attribution: 'Tiles © Esri' });
+                    const esriSatLabels = L.layerGroup([
+                        L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', { attribution: 'Tiles © Esri' }),
+                        L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/Reference/World_Boundaries_and_Places/MapServer/tile/{z}/{y}/{x}')
+                    ]);
+                    
+                    esriStreet.addTo(map);
+                    L.control.layers({
+                        "Street Map": esriStreet,
+                        "Satellite": esriSat,
+                        "Satellite (with Labels)": esriSatLabels
+                    }).addTo(map);
+                    
+                    if (typeof muniGeoJSON !== 'undefined') {
+                        L.geoJSON(muniGeoJSON, {
+                            style: function (feature) {
+                                return {color: "#555", weight: 2, fillOpacity: 0.1};
+                            }
+                        }).addTo(map);
+                    }
+                    
+                    const bounds = L.latLngBounds();
+                    
+                    features.forEach(f => {
+                        L.marker([f.lat, f.lng]).addTo(map).bindPopup('<b>' + f.name + '</b>');
+                        bounds.extend([f.lat, f.lng]);
+                        
+                        const points = [[f.lat, f.lng]];
+                        const R = 6378137;
+                        const start = f.angle - (f.fov / 2);
+                        const end = f.angle + (f.fov / 2);
+                        for (let i = start; i <= end; i += 5) {
+                            const rad = i * Math.PI / 180;
+                            const dLat = (f.radius * Math.cos(rad)) / R;
+                            const dLng = (f.radius * Math.sin(rad)) / (R * Math.cos(f.lat * Math.PI / 180));
+                            points.push([
+                                f.lat + dLat * (180 / Math.PI),
+                                f.lng + dLng * (180 / Math.PI)
+                            ]);
+                        }
+                        L.polygon(points, {color: f.color || '#ff3b30', fillOpacity: 0.3, weight: 2}).addTo(map);
+                    });
+                    
+                    if (features.length > 1) {
+                        map.fitBounds(bounds, {padding: [50, 50]});
+                    }
+                });
+                </script>
+            </div>
+            
+    </main>
+        
+</body>
+</html>

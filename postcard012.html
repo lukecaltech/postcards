@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Postcard 012 - Pompton Lakes Archive</title>
+    <link rel="stylesheet" href="styles.css">
+    
+    <!-- Leaflet Map -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="muni.js"></script>
+
+    <script src="script.js" defer></script>
+    
+</head>
+<body>
+    <header>
+        <h1>Pompton Lakes Postcard Archive</h1>
+    </header>
+
+    <main class="postcard-detail">
+        <a href="index.html" class="back-link">← Back to Gallery</a>
+        <h2>Postcard 012</h2>
+        <div class="tags" style="margin-bottom: 20px;"></div>
+        
+        <div class="postcard-images">
+            <div class="postcard-view">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+                    <h3 style="margin: 0;">Front</h3>
+                    <button onclick="document.getElementById('front-wrapper-012').classList.toggle('hide-boxes')" style="cursor: pointer; padding: 5px 10px; background: #6c757d; color: white; border: none; border-radius: 4px; font-size: 14px;">Show Tagged Views</button>
+                </div>
+                <div class="image-wrapper" id="front-wrapper-012">
+                    <img src="images/postcard012.jpg" alt="Postcard 012 Front">
+                    
+                </div>
+            </div>
+            
+            <div class="postcard-view">
+                <h3>Back</h3>
+                <img src="images/back012.jpg" alt="Postcard 012 Back">
+            </div>
+        </div>
+        
+        
+    </main>
+        
+</body>
+</html>

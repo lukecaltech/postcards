@@ -1,0 +1,310 @@
+:root {
+    --bg-color: #f9f9f9;
+    --text-color: #1a1a1a;
+    --grid-gap: 24px;
+}
+
+body {
+    /* Using Neutral BP and standard fallbacks if it's not installed system-wide */
+    font-family: 'Neutral BP', 'Helvetica Neue', Arial, sans-serif;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    margin: 0;
+    padding: 40px;
+    line-height: 1.6;
+}
+
+h1, h2, h3 {
+    font-family: 'Neutral BP Bold', 'Neutral BP', 'Helvetica Neue', Arial, sans-serif;
+    font-weight: bold;
+}
+
+header {
+    margin-bottom: 40px;
+    text-align: center;
+    border-bottom: 2px solid #ddd;
+    padding-bottom: 20px;
+}
+
+header h1 {
+    margin: 0;
+    font-size: 2rem;
+    letter-spacing: -0.02em;
+}
+
+/* Gallery Grid */
+.gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: var(--grid-gap);
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+.gallery-item {
+    background: #fff;
+    padding: 12px;
+    border: 1px solid #ddd;
+    text-align: center;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    text-decoration: none;
+    color: inherit;
+    display: block;
+}
+
+.gallery-item:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 6px 16px rgba(0,0,0,0.08);
+}
+
+.gallery-item img {
+    width: 100%;
+    height: auto;
+    border-bottom: 1px solid #eee;
+    margin-bottom: 12px;
+    background: #eaeaea; /* placeholder color */
+    object-fit: cover;
+    aspect-ratio: 3 / 2;
+}
+
+.gallery-item h3 {
+    font-size: 1.1rem;
+    margin: 0;
+    color: #333;
+}
+
+/* Individual Postcard Page */
+.postcard-detail {
+    max-width: 900px;
+    margin: 0 auto;
+    background: #fff;
+    padding: 40px;
+    border: 1px solid #ddd;
+}
+
+.back-link {
+    display: inline-block;
+    margin-bottom: 24px;
+    color: #555;
+    text-decoration: none;
+    font-weight: bold;
+    text-transform: uppercase;
+    font-size: 0.9rem;
+    letter-spacing: 0.05em;
+}
+
+.back-link:hover {
+    color: #000;
+    text-decoration: underline;
+}
+
+.postcard-images {
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+    margin-top: 30px;
+}
+
+.postcard-view {
+    text-align: center;
+}
+
+.postcard-view h3 {
+    text-align: center;
+    margin-bottom: 16px;
+    color: #666;
+    text-transform: uppercase;
+    font-size: 0.9rem;
+    letter-spacing: 0.05em;
+}
+
+.postcard-view .image-wrapper > img,
+.postcard-view > img {
+    width: 100%;
+    height: auto;
+    border: 1px solid #ccc;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    cursor: zoom-in;
+    transition: transform 0.2s;
+}
+
+.postcard-view .image-wrapper > img:hover,
+.postcard-view > img:hover {
+    transform: scale(1.02);
+}
+
+/* Zoom Modal */
+#zoom-modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.9);
+    z-index: 9999;
+    overflow: auto;
+    cursor: zoom-out;
+}
+
+#zoom-modal.active {
+    display: block;
+}
+
+#zoom-modal img {
+    display: block;
+    margin: 5vh auto;
+    box-shadow: 0 0 20px rgba(0,0,0,0.5);
+    /* Smooth zooming transition */
+    transition: width 0.05s linear;
+}
+
+#zoom-controls {
+    position: fixed;
+    bottom: 40px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(255, 255, 255, 0.95);
+    padding: 12px 25px;
+    border-radius: 30px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+    z-index: 10000;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    color: #333;
+    font-family: sans-serif;
+}
+
+#zoom-controls::before {
+    content: "−";
+    font-weight: bold;
+    font-size: 1.5rem;
+    cursor: default;
+}
+
+#zoom-controls::after {
+    content: "+";
+    font-weight: bold;
+    font-size: 1.5rem;
+    cursor: default;
+}
+
+#zoom-slider {
+    width: 250px;
+    cursor: ew-resize;
+}
+
+#zoom-close {
+    position: fixed;
+    top: 25px;
+    right: 30px;
+    color: white;
+    font-size: 35px;
+    font-weight: bold;
+    cursor: pointer;
+    z-index: 10001;
+    background: rgba(0, 0, 0, 0.6);
+    width: 50px;
+    height: 50px;
+    line-height: 48px;
+    text-align: center;
+    border-radius: 50%;
+    user-select: none;
+    font-family: Arial, sans-serif;
+    transition: background 0.2s ease, transform 0.1s ease;
+}
+
+#zoom-close:hover {
+    background: rgba(255, 255, 255, 0.3);
+    transform: scale(1.05);
+}
+
+/* Tags and Filters */
+.tags {
+    margin-top: 10px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 6px;
+}
+
+.tag {
+    background: #f0f0f0;
+    border: 1px solid #ddd;
+    border-radius: 12px;
+    padding: 3px 10px;
+    font-size: 0.75rem;
+    color: #555;
+    font-weight: bold;
+}
+
+.tag-loc {
+    background: #e3f2fd;
+    border-color: #bbdefb;
+    color: #0d47a1;
+}
+
+.tag-cat {
+    background: #f1f8e9;
+    border-color: #dcedc8;
+    color: #33691e;
+}
+
+.filters {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.filter-btn {
+    border: 1px solid #ccc;
+    background: white;
+    padding: 8px 18px;
+    margin: 5px;
+    cursor: pointer;
+    border-radius: 20px;
+    font-family: inherit;
+    font-size: 0.9rem;
+    transition: all 0.2s ease;
+}
+
+.filter-btn.active, .filter-btn:hover {
+    background: #333;
+    color: white;
+    border-color: #333;
+}
+
+.image-wrapper {
+    position: relative;
+    display: inline-block;
+    width: 100%;
+}
+
+.bounding-box {
+    position: absolute;
+    border: 3px solid; /* Color set inline */
+    background-color: transparent;
+    pointer-events: none; /* Allows clicks to pass through to the image for zooming */
+    transition: background-color 0.2s ease, opacity 0.2s ease;
+    z-index: 10;
+}
+
+.bounding-box.highlight {
+    background-color: rgba(255, 255, 255, 0.3);
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.8) inset;
+}
+
+.image-wrapper.hide-boxes .bounding-box {
+    opacity: 0 !important;
+}
+
+.tag[data-loc] {
+    cursor: pointer;
+    transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+}
+
+.tag[data-loc]:hover {
+    background: #ff3b30;
+    color: white;
+    border-color: #ff3b30;
+}

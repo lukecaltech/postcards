@@ -1,0 +1,617 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Advanced Postcard Archive Admin</title>
+    <!-- Leaflet CSS & JS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="muni.js"></script>
+    
+    <style>
+        body { margin: 0; font-family: sans-serif; display: flex; height: 100vh; overflow: hidden; background: #e9ecef; }
+        .sidebar { width: 350px; background: #f8f9fa; border-right: 1px solid #dee2e6; padding: 20px; overflow-y: auto; display: flex; flex-direction: column; z-index: 1000; }
+        .main-content { flex: 1; display: flex; flex-direction: column; }
+        
+        .file-ops { background: #fff; padding: 15px; border-radius: 8px; border: 1px solid #dee2e6; margin-bottom: 20px; }
+        .file-ops h3 { margin-top: 0; font-size: 1rem; color: #495057; }
+        .file-ops input { margin-bottom: 10px; width: 100%; }
+        .btn-export { background: #007bff; color: white; border: none; padding: 10px; border-radius: 4px; width: 100%; cursor: pointer; font-weight: bold; }
+        .btn-export:hover { background: #0056b3; }
+        
+        .tabs { display: flex; margin-bottom: 10px; border-bottom: 2px solid #dee2e6; }
+        .tab { padding: 8px 15px; cursor: pointer; font-weight: bold; color: #6c757d; border-bottom: 2px solid transparent; margin-bottom: -2px; }
+        .tab.active { color: #007bff; border-bottom: 2px solid #007bff; }
+        
+        .tab-content { display: none; flex-direction: column; }
+        .tab-content.active { display: flex; }
+
+        .list-item { padding: 12px; border: 1px solid #dee2e6; margin-bottom: 8px; background: #fff; border-radius: 4px; }
+        .list-item input { width: 100%; margin-top: 5px; padding: 5px; border: 1px solid #ccc; box-sizing: border-box; }
+        .btn-add { background: #28a745; color: white; border: none; padding: 10px; border-radius: 4px; cursor: pointer; font-weight: bold; margin-top: 10px; }
+
+        .toolbar { padding: 15px 20px; background: #fff; border-bottom: 1px solid #dee2e6; display: flex; align-items: center; gap: 20px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); z-index: 10; }
+        .toolbar select { padding: 8px; border-radius: 4px; border: 1px solid #ccc; font-size: 1rem; }
+        
+        .editor-container { display: flex; flex: 1; overflow: hidden; }
+        .props-panel { width: 280px; background: #fff; border-right: 1px solid #dee2e6; padding: 20px; overflow-y: auto; z-index: 10; }
+        .props-panel h3 { margin-top: 0; font-size: 1.1rem; border-bottom: 1px solid #eee; padding-bottom: 10px; }
+        
+        .field-group { margin-bottom: 15px; }
+        .field-group label { display: block; font-weight: bold; margin-bottom: 5px; font-size: 0.9rem; }
+        .field-group select, .field-group input[type="number"] { width: 100%; padding: 8px; box-sizing: border-box; }
+        
+        .cat-list { display: flex; flex-direction: column; gap: 5px; max-height: 150px; overflow-y: auto; border: 1px solid #eee; padding: 10px; }
+        .cat-list label { font-weight: normal; font-size: 0.9rem; margin: 0; display: flex; align-items: center; gap: 5px; }
+
+        .visual-panel { flex: 1; display: flex; flex-direction: column; position: relative; }
+        #admin-map { flex: 1; border-bottom: 2px solid #333; }
+        
+        .canvas-container { flex: 1; overflow: auto; padding: 20px; display: flex; justify-content: center; align-items: flex-start; background: #ddd; }
+        canvas { background: #fff; box-shadow: 0 4px 15px rgba(0,0,0,0.1); cursor: crosshair; max-width: 100%; height: auto; }
+
+        /* Modal */
+        #box-modal { display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background: white; padding: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.3); border-radius: 8px; z-index: 2000; width: 300px; max-height: 90vh; overflow-y: auto; }
+        #box-modal.active { display: block; }
+        #modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(0,0,0,0.5); z-index: 1999; }
+        #modal-overlay.active { display: block; }
+        .modal-actions { display: flex; justify-content: flex-end; gap: 10px; margin-top: 20px; }
+        .btn-save { background: #007bff; color: white; padding: 8px 15px; border: none; border-radius: 4px; cursor: pointer; }
+    </style>
+</head>
+<body>
+    <div class="sidebar">
+        <h2 style="margin-top:0;">Admin Portal</h2>
+        <div class="file-ops">
+            <h3>1. Load GeoJSON</h3>
+            <input type="file" id="file-input" accept=".geojson,.json">
+            <h3>2. Export Changes</h3>
+            <button id="export-btn" class="btn-export">Download database.geojson</button>
+        </div>
+        
+        <div class="tabs">
+            <div class="tab active" onclick="switchTab('loc')">Locations</div>
+            <div class="tab" onclick="switchTab('cat')">Categories</div>
+        </div>
+
+        <div id="tab-loc" class="tab-content active">
+            <div id="loc-list"></div>
+            <button class="btn-add" onclick="addLocation()">+ Add Location (Drops Pin on Map)</button>
+        </div>
+        <div id="tab-cat" class="tab-content">
+            <div id="cat-list"></div>
+            <button class="btn-add" onclick="addCategory()">+ Add Category</button>
+        </div>
+    </div>
+    
+    <div class="main-content">
+        <div class="toolbar">
+            <label for="postcard-select"><strong>Postcard:</strong></label>
+            <select id="postcard-select" disabled><option>Load data first</option></select>
+            <span style="color: #666; font-size: 0.9rem;">Trace boxes below, or adjust the viewshed angle on the map.</span>
+        </div>
+        
+        <div class="editor-container">
+            <div class="props-panel">
+                <h3>Global Properties</h3>
+                <div class="field-group">
+                    <label>Location (for Viewshed):</label>
+                    <select id="global-loc"><option value="">-- None --</option></select>
+                </div>
+                <div class="field-group">
+                    <label>Viewshed Angle:</label>
+                    <input type="range" id="global-angle" min="0" max="360" value="0" style="width: 100%;">
+                    <div style="text-align:center; font-weight:bold; font-size: 0.8rem;" id="angle-val">0°</div>
+                </div>
+                <div class="field-group">
+                    <label>FOV Width: <span id="fov-val" style="font-weight:normal; color:#555;">120°</span></label>
+                    <input type="range" id="global-fov" min="10" max="360" value="120" style="width: 100%;">
+                </div>
+                <div class="field-group">
+                    <label>Radius: <span id="radius-val" style="font-weight:normal; color:#555;">100m</span></label>
+                    <input type="range" id="global-radius" min="10" max="2000" step="10" value="100" style="width: 100%;">
+                </div>
+                <div class="field-group">
+                    <label>Categories:</label>
+                    <div class="cat-list" id="global-cats"></div>
+                </div>
+
+                <div class="box-list" style="margin-top:20px;">
+                    <h3>Bounding Boxes</h3>
+                    <div id="box-items-container"></div>
+                </div>
+            </div>
+
+            <div class="visual-panel">
+                <div id="admin-map"></div>
+                <div class="canvas-container">
+                    <img id="reference-img" style="display:none;">
+                    <canvas id="annotator" width="600" height="400"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="modal-overlay"></div>
+    <div id="box-modal">
+        <h3 style="margin-top:0;">Save Bounding Box</h3>
+        <div class="field-group">
+            <label>Location (for Viewshed):</label>
+            <select id="modal-loc"><option value="">-- None --</option></select>
+        </div>
+        <div class="field-group">
+            <label>Viewshed Angle: <span id="m-angle-val" style="font-weight:normal; color:#555;">0°</span></label>
+            <input type="range" id="modal-angle" min="0" max="360" value="0" style="width: 100%;">
+        </div>
+        <div class="field-group">
+            <label>FOV Width: <span id="m-fov-val" style="font-weight:normal; color:#555;">120°</span></label>
+            <input type="range" id="modal-fov" min="10" max="360" value="120" style="width: 100%;">
+        </div>
+        <div class="field-group">
+            <label>Radius: <span id="m-radius-val" style="font-weight:normal; color:#555;">100m</span></label>
+            <input type="range" id="modal-radius" min="10" max="2000" step="10" value="100" style="width: 100%;">
+        </div>
+        <div class="field-group">
+            <label>Categories:</label>
+            <div class="cat-list" id="modal-cats"></div>
+        </div>
+        <div class="modal-actions">
+            <button onclick="closeModal()">Cancel</button>
+            <button class="btn-save" onclick="saveBox()">Save Box</button>
+        </div>
+    </div>
+
+    <script>
+        let db = null;
+        let selectedPC = 1;
+
+        // Leaflet Setup
+        const map = L.map('admin-map').setView([41.002, -74.281], 14);
+        
+        const esriStreet = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer/tile/{z}/{y}/{x}', { attribution: 'Tiles &copy; Esri' });
+        const esriSat = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', { attribution: 'Tiles &copy; Esri' });
+        const esriSatLabels = L.layerGroup([
+            L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', { attribution: 'Tiles &copy; Esri' }),
+            L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/Reference/World_Boundaries_and_Places/MapServer/tile/{z}/{y}/{x}')
+        ]);
+        
+        esriStreet.addTo(map);
+        L.control.layers({
+            "Street Map": esriStreet,
+            "Satellite": esriSat,
+            "Satellite (with Labels)": esriSatLabels
+        }).addTo(map);
+
+        if (typeof muniGeoJSON !== 'undefined') {
+            L.geoJSON(muniGeoJSON, {
+                style: function (feature) {
+                    return {color: "#555", weight: 2, fillOpacity: 0.1};
+                }
+            }).addTo(map);
+        }
+
+        const featureGroup = L.featureGroup().addTo(map);
+        const viewshedLayer = L.featureGroup().addTo(map);
+        const tempViewshedLayer = L.featureGroup().addTo(map); // For modal live preview
+
+        // UI Elements
+        const selectPC = document.getElementById("postcard-select");
+        const gLoc = document.getElementById("global-loc");
+        const gCats = document.getElementById("global-cats");
+        const gAngle = document.getElementById("global-angle");
+        const gFov = document.getElementById("global-fov");
+        const gRadius = document.getElementById("global-radius");
+        const boxContainer = document.getElementById("box-items-container");
+        const canvas = document.getElementById("annotator");
+        const ctx = canvas.getContext("2d");
+        const img = document.getElementById("reference-img");
+
+        function switchTab(t) {
+            document.querySelectorAll('.tab').forEach(el => el.classList.remove('active'));
+            document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+            event.target.classList.add('active');
+            document.getElementById(`tab-${t}`).classList.add('active');
+        }
+
+        document.getElementById("file-input").addEventListener("change", (e) => {
+            const file = e.target.files[0];
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                db = JSON.parse(e.target.result);
+                setupUI();
+            };
+            reader.readAsText(file);
+        });
+
+        document.getElementById("export-btn").addEventListener("click", () => {
+            if (!db) return alert("Load a file first!");
+            const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(db, null, 2));
+            const a = document.createElement("a");
+            a.href = dataStr;
+            a.download = "database.geojson";
+            a.click();
+        });
+
+        function setupUI() {
+            selectPC.innerHTML = "";
+            selectPC.disabled = false;
+            for(let i=1; i<=32; i++) {
+                let opt = document.createElement("option");
+                opt.value = i; opt.text = "Postcard " + String(i).padStart(3, '0');
+                selectPC.appendChild(opt);
+            }
+            selectPC.addEventListener("change", (e) => {
+                selectedPC = parseInt(e.target.value);
+                loadPostcard();
+            });
+            
+            renderSidebar();
+            loadPostcard();
+        }
+
+        function createViewshed(lat, lng, angle, fov = 120, radius = 100) {
+            const points = [[lat, lng]];
+            const R = 6378137;
+            const start = angle - (fov / 2);
+            const end = angle + (fov / 2);
+            for (let i = start; i <= end; i += 5) {
+                const rad = i * Math.PI / 180;
+                const dLat = (radius * Math.cos(rad)) / R;
+                const dLng = (radius * Math.sin(rad)) / (R * Math.cos(lat * Math.PI / 180));
+                points.push([
+                    lat + dLat * (180 / Math.PI),
+                    lng + dLng * (180 / Math.PI)
+                ]);
+            }
+            return points;
+        }
+
+        function updateMap() {
+            featureGroup.clearLayers();
+            viewshedLayer.clearLayers();
+            if(!db) return;
+
+            const pc = getPC();
+
+            db.features.forEach(f => {
+                const coords = f.geometry?.coordinates || [0,0];
+                const latlng = [coords[1], coords[0]];
+                
+                const marker = L.marker(latlng, {draggable: true}).addTo(featureGroup);
+                marker.bindTooltip(f.properties.name);
+                
+                marker.on('dragend', (e) => {
+                    const pos = e.target.getLatLng();
+                    f.geometry.coordinates = [pos.lng, pos.lat];
+                    renderSidebar();
+                    updateMap();
+                });
+
+                // Global Viewshed
+                if (pc.global_location_id === f.id) {
+                    const angle = pc.viewshed_angle || 0;
+                    const fov = pc.viewshed_fov || 120;
+                    const radius = pc.viewshed_radius || 100;
+                    const vsPoints = createViewshed(coords[1], coords[0], angle, fov, radius);
+                    L.polygon(vsPoints, {color: '#ff3b30', fillOpacity: 0.4, weight: 2}).addTo(viewshedLayer);
+                }
+                
+                // Box Viewsheds
+                (pc.boxes || []).forEach(box => {
+                    if (box.location_id === f.id) {
+                        const angle = box.viewshed_angle || 0;
+                        const fov = box.viewshed_fov || 120;
+                        const radius = box.viewshed_radius || 100;
+                        const vsPoints = createViewshed(coords[1], coords[0], angle, fov, radius);
+                        L.polygon(vsPoints, {color: '#007bff', fillOpacity: 0.4, weight: 2}).addTo(viewshedLayer);
+                    }
+                });
+            });
+        }
+
+        window.renameLoc = function(id) {
+            if(!db) return;
+            const f = db.features.find(x => x.id === id);
+            if(!f) return;
+            const newName = prompt("New Name for location:", f.properties.name);
+            if(newName) {
+                f.properties.name = newName;
+                renderSidebar();
+                loadPostcard();
+            }
+        };
+
+        window.moveLoc = function(id, dir) {
+            if(!db) return;
+            const idx = db.features.findIndex(x => x.id === id);
+            if(idx < 0) return;
+            const newIdx = idx + dir;
+            if(newIdx < 0 || newIdx >= db.features.length) return;
+            const temp = db.features[idx];
+            db.features[idx] = db.features[newIdx];
+            db.features[newIdx] = temp;
+            renderSidebar();
+            loadPostcard();
+        };
+
+        function renderSidebar() {
+            // Locations
+            const lList = document.getElementById("loc-list");
+            lList.innerHTML = "";
+            db.features.forEach(f => {
+                const coords = f.geometry?.coordinates || [0, 0];
+                const li = document.createElement("div");
+                li.className = "list-item";
+                li.innerHTML = `
+                    <strong>${f.properties.name}</strong>
+                    <div style="margin-top:5px; margin-bottom: 5px;">
+                        <button onclick="renameLoc('${f.id}')" style="font-size:0.7rem;">Rename</button>
+                        <button onclick="moveLoc('${f.id}', -1)" style="font-size:0.7rem;">Up</button>
+                        <button onclick="moveLoc('${f.id}', 1)" style="font-size:0.7rem;">Down</button>
+                    </div>
+                    <div style="font-size:0.8rem; color:#666;">
+                        Lat: ${coords[1].toFixed(4)}<br>Lng: ${coords[0].toFixed(4)}
+                        <br><em>(Drag pin on map to move)</em>
+                    </div>
+                `;
+                lList.appendChild(li);
+            });
+
+            // Categories
+            const cList = document.getElementById("cat-list");
+            cList.innerHTML = "";
+            db.categories.forEach(c => {
+                const li = document.createElement("div");
+                li.className = "list-item";
+                li.innerHTML = `<strong>${c.name}</strong>`;
+                cList.appendChild(li);
+            });
+
+            updateMap();
+        }
+
+        function addLocation() {
+            if(!db) return;
+            const name = prompt("Location Name:");
+            if(!name) return;
+            const id = name.toLowerCase().replace(/[^a-z0-9]/g, '');
+            
+            // Place at center of current map view
+            const center = map.getCenter();
+            
+            db.features.push({
+                type: "Feature", 
+                id: id, 
+                geometry: { type: "Point", coordinates: [center.lng, center.lat] }, 
+                properties: { name: name }
+            });
+            renderSidebar();
+            loadPostcard();
+        }
+
+        function addCategory() {
+            if(!db) return;
+            const name = prompt("Category Name:");
+            if(!name) return;
+            const id = name.toLowerCase().replace(/[^a-z0-9]/g, '');
+            db.categories.push({ id: id, name: name });
+            renderSidebar();
+            loadPostcard();
+        }
+
+        function getPC() {
+            let pc = db.postcards.find(p => p.id === selectedPC);
+            if(!pc) {
+                pc = { id: selectedPC, global_location_id: null, viewshed_angle: 0, viewshed_fov: 120, viewshed_radius: 100, global_categories: [], boxes: [] };
+                db.postcards.push(pc);
+            }
+            return pc;
+        }
+
+        function loadPostcard() {
+            if (!db) return;
+            const pc = getPC();
+            
+            // Dropdowns
+            gLoc.innerHTML = '<option value="">-- None --</option>';
+            document.getElementById("modal-loc").innerHTML = '<option value="">-- None --</option>';
+            db.features.forEach(f => {
+                gLoc.innerHTML += `<option value="${f.id}">${f.properties.name}</option>`;
+                document.getElementById("modal-loc").innerHTML += `<option value="${f.id}">${f.properties.name}</option>`;
+            });
+            
+            gLoc.value = pc.global_location_id || "";
+            gLoc.onchange = (e) => { 
+                pc.global_location_id = e.target.value || null; 
+                updateMap(); 
+            };
+
+            // Global Sliders
+            gAngle.value = pc.viewshed_angle || 0;
+            document.getElementById("angle-val").innerText = gAngle.value + "°";
+            gAngle.oninput = (e) => {
+                pc.viewshed_angle = parseInt(e.target.value);
+                document.getElementById("angle-val").innerText = pc.viewshed_angle + "°";
+                updateMap();
+            };
+            
+            gFov.value = pc.viewshed_fov || 120;
+            document.getElementById("fov-val").innerText = gFov.value + "°";
+            gFov.oninput = (e) => {
+                pc.viewshed_fov = parseInt(e.target.value);
+                document.getElementById("fov-val").innerText = pc.viewshed_fov + "°";
+                updateMap();
+            };
+            
+            gRadius.value = pc.viewshed_radius || 100;
+            document.getElementById("radius-val").innerText = gRadius.value + "m";
+            gRadius.oninput = (e) => {
+                pc.viewshed_radius = parseInt(e.target.value);
+                document.getElementById("radius-val").innerText = pc.viewshed_radius + "m";
+                updateMap();
+            };
+
+            // Categories
+            gCats.innerHTML = "";
+            document.getElementById("modal-cats").innerHTML = "";
+            db.categories.forEach(c => {
+                const checked = (pc.global_categories || []).includes(c.id) ? "checked" : "";
+                gCats.innerHTML += `<label><input type="checkbox" value="${c.id}" class="g-cat-cb" ${checked}> ${c.name}</label>`;
+                document.getElementById("modal-cats").innerHTML += `<label><input type="checkbox" value="${c.id}" class="m-cat-cb"> ${c.name}</label>`;
+            });
+            
+            document.querySelectorAll(".g-cat-cb").forEach(cb => {
+                cb.onchange = () => { pc.global_categories = Array.from(document.querySelectorAll(".g-cat-cb:checked")).map(x => x.value); };
+            });
+
+            renderBoxList();
+            updateMap();
+
+            img.src = "thumbnails/thumb_" + String(selectedPC).padStart(3, '0') + ".jpg";
+            img.onload = () => {
+                canvas.width = img.width;
+                canvas.height = img.height;
+                drawCanvas();
+            };
+        }
+
+        function renderBoxList() {
+            const pc = getPC();
+            boxContainer.innerHTML = "";
+            (pc.boxes || []).forEach((box, idx) => {
+                const locName = box.location_id ? (db.features.find(f => f.id === box.location_id)?.properties.name || "Unknown") : "No Loc";
+                boxContainer.innerHTML += `
+                    <div class="box-item">
+                        <strong>Box ${idx+1}:</strong> ${locName}
+                        <button style="position:absolute; right:5px; top:5px; background:red; color:white; border:none; cursor:pointer;" onclick="deleteBox(${idx})">X</button>
+                    </div>
+                `;
+            });
+        }
+
+        window.deleteBox = function(idx) {
+            getPC().boxes.splice(idx, 1);
+            renderBoxList();
+            drawCanvas();
+            updateMap();
+        }
+
+        function drawCanvas() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+            
+            const pc = getPC();
+            (pc.boxes || []).forEach((box, idx) => {
+                ctx.strokeStyle = "#ff3b30";
+                ctx.lineWidth = 2;
+                const bx = box.x * canvas.width;
+                const by = box.y * canvas.height;
+                const bw = box.w * canvas.width;
+                const bh = box.h * canvas.height;
+                
+                ctx.strokeRect(bx, by, bw, bh);
+                ctx.fillStyle = "rgba(255, 59, 48, 0.1)";
+                ctx.fillRect(bx, by, bw, bh);
+                
+                ctx.fillStyle = "red";
+                ctx.font = "bold 12px sans-serif";
+                ctx.fillText(`Box ${idx+1}`, bx + 2, by + 12);
+            });
+        }
+
+        // Drawing
+        let isDrawing = false, startX, startY, tempBox = null;
+
+        canvas.addEventListener("mousedown", (e) => {
+            isDrawing = true;
+            const rect = canvas.getBoundingClientRect();
+            startX = (e.clientX - rect.left) * (canvas.width / rect.width);
+            startY = (e.clientY - rect.top) * (canvas.height / rect.height);
+        });
+
+        canvas.addEventListener("mousemove", (e) => {
+            if (!isDrawing) return;
+            drawCanvas();
+            const rect = canvas.getBoundingClientRect();
+            const mx = (e.clientX - rect.left) * (canvas.width / rect.width);
+            const my = (e.clientY - rect.top) * (canvas.height / rect.height);
+            ctx.strokeStyle = "#007bff"; ctx.strokeRect(startX, startY, mx - startX, my - startY);
+        });
+
+        canvas.addEventListener("mouseup", (e) => {
+            if (!isDrawing) return;
+            isDrawing = false;
+            const rect = canvas.getBoundingClientRect();
+            const mx = (e.clientX - rect.left) * (canvas.width / rect.width);
+            const my = (e.clientY - rect.top) * (canvas.height / rect.height);
+            
+            const x = Math.min(startX, mx) / canvas.width;
+            const y = Math.min(startY, my) / canvas.height;
+            const w = Math.abs(mx - startX) / canvas.width;
+            const h = Math.abs(my - startY) / canvas.height;
+            
+            if (w < 0.02 || h < 0.02) { drawCanvas(); return; }
+            tempBox = { x, y, w, h };
+            openModal();
+        });
+
+        // Box Modal Live Viewshed Logic
+        function drawTempViewshed() {
+            tempViewshedLayer.clearLayers();
+            const locId = document.getElementById("modal-loc").value;
+            if (!locId) return;
+            
+            const f = db.features.find(x => x.id === locId);
+            if(!f) return;
+            
+            const coords = f.geometry?.coordinates || [0,0];
+            const angle = parseInt(document.getElementById("modal-angle").value);
+            const fov = parseInt(document.getElementById("modal-fov").value);
+            const radius = parseInt(document.getElementById("modal-radius").value);
+            
+            const vsPoints = createViewshed(coords[1], coords[0], angle, fov, radius);
+            L.polygon(vsPoints, {color: '#007bff', fillOpacity: 0.5, weight: 2}).addTo(tempViewshedLayer);
+        }
+
+        document.getElementById("modal-loc").onchange = drawTempViewshed;
+        document.getElementById("modal-angle").addEventListener("input", (e) => { document.getElementById("m-angle-val").innerText = e.target.value + "°"; drawTempViewshed(); });
+        document.getElementById("modal-fov").addEventListener("input", (e) => { document.getElementById("m-fov-val").innerText = e.target.value + "°"; drawTempViewshed(); });
+        document.getElementById("modal-radius").addEventListener("input", (e) => { document.getElementById("m-radius-val").innerText = e.target.value + "m"; drawTempViewshed(); });
+
+        function openModal() {
+            document.getElementById("modal-overlay").classList.add("active");
+            document.getElementById("box-modal").classList.add("active");
+            document.getElementById("modal-loc").value = "";
+            document.getElementById("modal-angle").value = 0; document.getElementById("m-angle-val").innerText = "0°";
+            document.getElementById("modal-fov").value = 120; document.getElementById("m-fov-val").innerText = "120°";
+            document.getElementById("modal-radius").value = 100; document.getElementById("m-radius-val").innerText = "100m";
+            document.querySelectorAll(".m-cat-cb").forEach(cb => cb.checked = false);
+            tempViewshedLayer.clearLayers();
+        }
+
+        window.closeModal = function() {
+            document.getElementById("modal-overlay").classList.remove("active");
+            document.getElementById("box-modal").classList.remove("active");
+            tempBox = null;
+            tempViewshedLayer.clearLayers();
+            drawCanvas();
+        }
+
+        window.saveBox = function() {
+            if(!tempBox) return closeModal();
+            tempBox.location_id = document.getElementById("modal-loc").value || null;
+            tempBox.viewshed_angle = parseInt(document.getElementById("modal-angle").value);
+            tempBox.viewshed_fov = parseInt(document.getElementById("modal-fov").value);
+            tempBox.viewshed_radius = parseInt(document.getElementById("modal-radius").value);
+            tempBox.categories = Array.from(document.querySelectorAll(".m-cat-cb:checked")).map(cb => cb.value);
+            
+            getPC().boxes.push(tempBox);
+            tempBox = null;
+            closeModal();
+            renderBoxList();
+            drawCanvas();
+            updateMap();
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,748 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "id": "location1",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -74.27625238895418,
+          40.99288048954979
+        ]
+      },
+      "properties": {
+        "name": "Location 1"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "location2",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -74.28843498229982,
+          41.01706486733496
+        ]
+      },
+      "properties": {
+        "name": "Location 2"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "location3",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -74.29987192153932,
+          40.99881607826166
+        ]
+      },
+      "properties": {
+        "name": "Location 3"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "location5",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -74.30674374103548,
+          40.99726137817312
+        ]
+      },
+      "properties": {
+        "name": "Location 5"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "location6",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -74.27862346172334,
+          41.005864401718334
+        ]
+      },
+      "properties": {
+        "name": "Location 6"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "location8",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -74.27856445312501,
+          40.991795344609656
+        ]
+      },
+      "properties": {
+        "name": "Location 8"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "location9",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -74.2920881509781,
+          41.0072569738029
+        ]
+      },
+      "properties": {
+        "name": "Location 9"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "location10",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -74.29002285003664,
+          41.0129807836762
+        ]
+      },
+      "properties": {
+        "name": "Location 10"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "location11",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -74.28929328918458,
+          41.00481590506042
+        ]
+      },
+      "properties": {
+        "name": "Location 11"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "location13",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -74.28024351596834,
+          40.992228594918
+        ]
+      },
+      "properties": {
+        "name": "Location 13"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "location14",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -74.27998065948488,
+          40.99192086601995
+        ]
+      },
+      "properties": {
+        "name": "Location 14"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "location15",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -74.28086042404176,
+          40.995180289933835
+        ]
+      },
+      "properties": {
+        "name": "Location 15"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "location16",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -74.27916526794435,
+          40.99175485378116
+        ]
+      },
+      "properties": {
+        "name": "Location 16"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "location17a",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -74.29231345653535,
+          41.007289358850066
+        ]
+      },
+      "properties": {
+        "name": "Location 17a"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "location17b",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -74.27519559860231,
+          41.007690122491475
+        ]
+      },
+      "properties": {
+        "name": "Location 17b"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "location17c",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -74.27603244781496,
+          41.00134238769616
+        ]
+      },
+      "properties": {
+        "name": "Location 17c"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "location19",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -74.290269613266,
+          40.9996096089635
+        ]
+      },
+      "properties": {
+        "name": "Location 19"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "location20",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -74.2995071411133,
+          41.00373500494221
+        ]
+      },
+      "properties": {
+        "name": "Location 20"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "location21",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -74.27502393722536,
+          40.99364979790394
+        ]
+      },
+      "properties": {
+        "name": "Location 21"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "location23a",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -74.27992701530458,
+          40.97159138183371
+        ]
+      },
+      "properties": {
+        "name": "Location 23a"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "location24b",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -74.29815530776979,
+          40.996888892498504
+        ]
+      },
+      "properties": {
+        "name": "Location 24b"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "location28",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -74.2807048559189,
+          40.99181559001457
+        ]
+      },
+      "properties": {
+        "name": "Location 28"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "location24a",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -74.30324077606203,
+          40.99922094205833
+        ]
+      },
+      "properties": {
+        "name": "Location 24a"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "locaton24c",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -74.29856300354005,
+          40.99888085663624
+        ]
+      },
+      "properties": {
+        "name": "Location 24c"
+      }
+    }
+  ],
+  "categories": [
+    {
+      "id": "dam",
+      "name": "Pompton Lake Dam"
+    },
+    {
+      "id": "inez",
+      "name": "Lake Inez"
+    },
+    {
+      "id": "riverdale",
+      "name": "Riverdale / Pompton Junction"
+    },
+    {
+      "id": "misc",
+      "name": "Scenes on Pompton Lake"
+    },
+    {
+      "id": "morriscanalpomptonfeeder",
+      "name": "Morris Canal (Pompton Feeder)"
+    }
+  ],
+  "postcards": [
+    {
+      "id": 1,
+      "global_location_id": "location1",
+      "global_categories": [
+        "dam"
+      ],
+      "boxes": [],
+      "viewshed_angle": 262,
+      "viewshed_fov": 50,
+      "viewshed_radius": 350
+    },
+    {
+      "id": 2,
+      "global_location_id": "location2",
+      "global_categories": [
+        "inez"
+      ],
+      "boxes": [],
+      "viewshed_angle": 239
+    },
+    {
+      "id": 3,
+      "global_location_id": "location3",
+      "global_categories": [
+        "riverdale"
+      ],
+      "boxes": [],
+      "viewshed_angle": 214,
+      "viewshed_fov": 76,
+      "viewshed_radius": 100
+    },
+    {
+      "id": 4,
+      "global_location_id": null,
+      "global_categories": [
+        "riverdale"
+      ],
+      "boxes": []
+    },
+    {
+      "id": 5,
+      "global_location_id": "location5",
+      "global_categories": [
+        "riverdale"
+      ],
+      "boxes": [],
+      "viewshed_angle": 42,
+      "viewshed_radius": 930,
+      "viewshed_fov": 83
+    },
+    {
+      "id": 6,
+      "global_location_id": "location6",
+      "global_categories": [
+        "misc"
+      ],
+      "boxes": [],
+      "viewshed_angle": 169,
+      "viewshed_radius": 740,
+      "viewshed_fov": 48
+    },
+    {
+      "id": 7,
+      "global_location_id": null,
+      "global_categories": [
+        "misc"
+      ],
+      "boxes": []
+    },
+    {
+      "id": 8,
+      "global_location_id": "location8",
+      "global_categories": [
+        "dam"
+      ],
+      "boxes": [],
+      "viewshed_angle": 14,
+      "viewshed_fov": 76
+    },
+    {
+      "id": 9,
+      "global_location_id": "location9",
+      "global_categories": [
+        "inez"
+      ],
+      "boxes": [],
+      "viewshed_angle": 8
+    },
+    {
+      "id": 10,
+      "global_location_id": "location10",
+      "global_categories": [
+        "inez"
+      ],
+      "boxes": [],
+      "viewshed_angle": 355
+    },
+    {
+      "id": 11,
+      "global_location_id": "location11",
+      "global_categories": [],
+      "boxes": [],
+      "viewshed_angle": 334,
+      "viewshed_fov": 51,
+      "viewshed_radius": 70
+    },
+    {
+      "id": 12,
+      "global_location_id": null,
+      "global_categories": [],
+      "boxes": []
+    },
+    {
+      "id": 13,
+      "global_location_id": "location13",
+      "global_categories": [
+        "dam"
+      ],
+      "boxes": [],
+      "viewshed_angle": 82,
+      "viewshed_radius": 150,
+      "viewshed_fov": 75
+    },
+    {
+      "id": 14,
+      "global_location_id": "location14",
+      "global_categories": [
+        "dam"
+      ],
+      "boxes": [],
+      "viewshed_angle": 64,
+      "viewshed_radius": 150,
+      "viewshed_fov": 71
+    },
+    {
+      "id": 15,
+      "global_location_id": "location15",
+      "global_categories": [],
+      "boxes": [],
+      "viewshed_angle": 241,
+      "viewshed_radius": 610,
+      "viewshed_fov": 47
+    },
+    {
+      "id": 16,
+      "global_location_id": "location16",
+      "global_categories": [
+        "dam"
+      ],
+      "boxes": [],
+      "viewshed_angle": 35,
+      "viewshed_fov": 92
+    },
+    {
+      "id": 17,
+      "global_location_id": null,
+      "global_categories": [],
+      "boxes": [
+        {
+          "x": 0.07333333333333333,
+          "y": 0.47570332480818417,
+          "w": 0.42,
+          "h": 0.40153452685422,
+          "location_id": "location17a",
+          "viewshed_angle": 13,
+          "viewshed_fov": 78,
+          "viewshed_radius": 250,
+          "categories": [
+            "inez"
+          ]
+        },
+        {
+          "x": 0.515,
+          "y": 0.4680306905370844,
+          "w": 0.4116666666666667,
+          "h": 0.4040920716112532,
+          "location_id": "location17b",
+          "viewshed_angle": 30,
+          "viewshed_fov": 90,
+          "viewshed_radius": 300,
+          "categories": [
+            "misc"
+          ]
+        },
+        {
+          "x": 0.5166666666666667,
+          "y": 0.04092071611253197,
+          "w": 0.405,
+          "h": 0.4092071611253197,
+          "location_id": "location17c",
+          "viewshed_angle": 346,
+          "viewshed_fov": 80,
+          "viewshed_radius": 660,
+          "categories": [
+            "misc"
+          ]
+        }
+      ]
+    },
+    {
+      "id": 18,
+      "global_location_id": null,
+      "global_categories": [
+        "misc"
+      ],
+      "boxes": []
+    },
+    {
+      "id": 19,
+      "global_location_id": "location19",
+      "global_categories": [],
+      "boxes": [],
+      "viewshed_angle": 55,
+      "viewshed_fov": 66
+    },
+    {
+      "id": 20,
+      "global_location_id": "location20",
+      "global_categories": [
+        "riverdale"
+      ],
+      "boxes": [],
+      "viewshed_fov": 75,
+      "viewshed_radius": 120,
+      "viewshed_angle": 244
+    },
+    {
+      "id": 21,
+      "global_location_id": "location21",
+      "global_categories": [],
+      "boxes": [],
+      "viewshed_angle": 48,
+      "viewshed_fov": 80,
+      "viewshed_radius": 320
+    },
+    {
+      "id": 22,
+      "global_location_id": "location21",
+      "global_categories": [],
+      "boxes": [],
+      "viewshed_angle": 34,
+      "viewshed_radius": 340,
+      "viewshed_fov": 80
+    },
+    {
+      "id": 23,
+      "global_location_id": null,
+      "global_categories": [],
+      "boxes": [
+        {
+          "x": 0.055,
+          "y": 0.4897959183673469,
+          "w": 0.41833333333333333,
+          "h": 0.41836734693877553,
+          "location_id": "location3",
+          "viewshed_angle": 214,
+          "viewshed_fov": 75,
+          "viewshed_radius": 100,
+          "categories": [
+            "riverdale"
+          ]
+        },
+        {
+          "x": 0.5133333333333333,
+          "y": 0.4846938775510204,
+          "w": 0.42833333333333334,
+          "h": 0.4260204081632653,
+          "location_id": "location23a",
+          "viewshed_angle": 110,
+          "viewshed_fov": 72,
+          "viewshed_radius": 100,
+          "categories": [
+            "morriscanalpomptonfeeder"
+          ]
+        }
+      ]
+    },
+    {
+      "id": 24,
+      "global_location_id": null,
+      "global_categories": [
+        "riverdale"
+      ],
+      "boxes": [
+        {
+          "x": 0.49166666666666664,
+          "y": 0.04081632653061224,
+          "w": 0.43,
+          "h": 0.4005102040816326,
+          "location_id": "location24a",
+          "viewshed_angle": 331,
+          "viewshed_fov": 120,
+          "viewshed_radius": 280,
+          "categories": []
+        },
+        {
+          "x": 0.043333333333333335,
+          "y": 0.05612244897959184,
+          "w": 0.41833333333333333,
+          "h": 0.4005102040816326,
+          "location_id": "location24b",
+          "viewshed_angle": 0,
+          "viewshed_fov": 70,
+          "viewshed_radius": 220,
+          "categories": []
+        },
+        {
+          "x": 0.043333333333333335,
+          "y": 0.4770408163265306,
+          "w": 0.42333333333333334,
+          "h": 0.4030612244897959,
+          "location_id": "locaton24c",
+          "viewshed_angle": 89,
+          "viewshed_fov": 90,
+          "viewshed_radius": 100,
+          "categories": [
+            "riverdale"
+          ]
+        }
+      ],
+      "viewshed_fov": 120
+    },
+    {
+      "id": 25,
+      "global_location_id": "location9",
+      "global_categories": [
+        "inez"
+      ],
+      "boxes": [],
+      "viewshed_angle": 8
+    },
+    {
+      "id": 26,
+      "global_location_id": null,
+      "global_categories": [
+        "riverdale"
+      ],
+      "boxes": []
+    },
+    {
+      "id": 27,
+      "global_location_id": null,
+      "global_categories": [
+        "riverdale"
+      ],
+      "boxes": []
+    },
+    {
+      "id": 28,
+      "global_location_id": "location28",
+      "global_categories": [
+        "dam"
+      ],
+      "boxes": [],
+      "viewshed_angle": 49,
+      "viewshed_fov": 80
+    },
+    {
+      "id": 29,
+      "global_location_id": null,
+      "global_categories": [],
+      "boxes": []
+    },
+    {
+      "id": 30,
+      "global_location_id": null,
+      "global_categories": [
+        "misc"
+      ],
+      "boxes": []
+    },
+    {
+      "id": 31,
+      "global_location_id": null,
+      "global_categories": [],
+      "boxes": []
+    },
+    {
+      "id": 32,
+      "global_location_id": null,
+      "global_categories": [],
+      "boxes": []
+    }
+  ]
+}
