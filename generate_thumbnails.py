@@ -9,9 +9,9 @@ except ImportError:
     subprocess.check_call([sys.executable, "-m", "pip", "install", "Pillow"])
     from PIL import Image
 
-IMAGE_DIR = r"E:\Postcards"
+IMAGE_DIR = "images"
 THUMB_DIR = r"c:\Users\lukec\Pictures\Postcards\letter\website\thumbnails"
-TOTAL_POSTCARDS = 32
+TOTAL_POSTCARDS = 37
 THUMB_SIZE = (600, 600)
 
 os.makedirs(THUMB_DIR, exist_ok=True)

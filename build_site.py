@@ -3,7 +3,7 @@ import json
 
 OUTPUT_DIR = r"c:\Users\lukec\Pictures\Postcards\letter\website"
 IMAGE_DIR = "images"
-TOTAL_POSTCARDS = 32
+TOTAL_POSTCARDS = 37
 PALETTE = ["#007bff", "#28a745", "#fd7e14", "#6f42c1", "#17a2b8", "#e83e8c"]
 
 os.makedirs(OUTPUT_DIR, exist_ok=True)
